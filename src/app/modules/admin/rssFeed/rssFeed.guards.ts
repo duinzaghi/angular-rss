@@ -22,10 +22,10 @@ export class CanDeactivateRssfeedDetails implements CanDeactivate<RssFeedDetails
             nextRoute = nextRoute.firstChild;
         }
 
-        // If the next state doesn't contain '/contacts'
+        // If the next state doesn't contain '/rssfeed'
         // it means we are navigating away from the
-        // contacts app
-        if ( !nextState.url.includes('/contacts') )
+        // rssfeed app
+        if ( !nextState.url.includes('/rssfeed') )
         {
             // Let it navigate
             return true;
