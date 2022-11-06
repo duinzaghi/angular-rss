@@ -75,7 +75,7 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)},
-            {path: 'rssfeed', loadChildren: () => import('app/modules/admin/rssFeed/rssfeed.module').then(m => m.RssFeedModule)},
+            {path: 'rss-feed', loadChildren: () => import('app/modules/admin/rssFeed/rssfeed.module').then(m => m.RssFeedModule)},
         ]
     }
 ];

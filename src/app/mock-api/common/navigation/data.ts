@@ -10,11 +10,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/example'
     },
     {
-        id   : 'rssfeed',
-        title: 'RssFeed',
+        id   : 'rss-feed',
+        title: 'Rss Feed',
         type : 'basic',
         icon : 'heroicons_outline:user-group',
-        link : '/rssfeed'
+        link : '/rss-feed'
     },
 ];
 export const compactNavigation: FuseNavigationItem[] = [
@@ -26,11 +26,11 @@ export const compactNavigation: FuseNavigationItem[] = [
         link : '/example'
     },
     {
-        id   : 'rssfeed',
-        title: 'RssFeed',
+        id   : 'rss-feed',
+        title: 'Rss Feed',
         type : 'basic',
         icon : 'heroicons_outline:user-group',
-        link : '/rssfeed'
+        link : '/rss-feed'
     },
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
@@ -42,11 +42,11 @@ export const futuristicNavigation: FuseNavigationItem[] = [
         link : '/example'
     },
     {
-        id   : 'rssfeed',
-        title: 'RssFeed',
+        id   : 'rss-feed',
+        title: 'Rss Feed',
         type : 'basic',
         icon : 'heroicons_outline:user-group',
-        link : '/rssfeed'
+        link : '/rss-feed'
     },
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
@@ -58,10 +58,10 @@ export const horizontalNavigation: FuseNavigationItem[] = [
         link : '/example'
     },
     {
-        id   : 'rssfeed',
-        title: 'RssFeed',
+        id   : 'rss-feed',
+        title: 'Rss Feed',
         type : 'basic',
         icon : 'heroicons_outline:user-group',
-        link : '/rssfeed'
+        link : '/rss-feed'
     },
 ];
