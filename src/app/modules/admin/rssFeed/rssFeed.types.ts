@@ -20,6 +20,19 @@ export interface Contact
     notes?: string | null;
     tags: string[];
 }
+export interface NewItem{
+    id: string,
+    title: string,
+    pubDate: string,
+    fullpubdate: string,
+    description: string,
+    link: string,
+    originalLink: string,
+    guid:string,
+    category: string,
+    author: string,
+    name: string
+}
 
 export interface Country
 {

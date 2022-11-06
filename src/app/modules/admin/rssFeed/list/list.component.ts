@@ -5,11 +5,11 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDrawer } from '@angular/material/sidenav';
 import { filter, fromEvent, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { Contact, Country } from 'app/modules/admin/rssFeed/rssFeed.types';
+import { NewItem, Country } from 'app/modules/admin/rssFeed/rssFeed.types';
 import { RssFeedService } from 'app/modules/admin/rssFeed/rssFeed.service';
 
 @Component({
-    selector       : 'rssfeed-list',
+    selector       : 'rss-feed-list',
     templateUrl    : './list.component.html',
     encapsulation  : ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,14 +18,14 @@ export class RssFeedListComponent implements OnInit, OnDestroy
 {
     @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
 
-    contacts$: Observable<Contact[]>;
+    news$: Observable<NewItem[]>;
 
-    contactsCount: number = 0;
-    contactsTableColumns: string[] = ['name', 'email', 'phoneNumber', 'job'];
+    newsCount: number = 0;
+    newsTableColumns: string[] = ['name', 'email', 'phoneNumber', 'job'];
     countries: Country[];
     drawerMode: 'side' | 'over';
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-    selectedContact: Contact;
+    selectedNew: NewItem;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -51,26 +51,24 @@ export class RssFeedListComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
-        // Get the contacts
-        this.contacts$ = this._rssFeedService.contacts$;
-        this._rssFeedService.contacts$
+        // Get the news
+        this.news$ = this._rssFeedService.news$;
+        this._rssFeedService.news$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contacts: Contact[]) => {
-
+            .subscribe((news: NewItem[]) => {
                 // Update the counts
-                this.contactsCount = contacts.length;
-
+                this.newsCount = news.length;
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
 
         // Get the contact
-        this._rssFeedService.contact$
+        this._rssFeedService.newItem$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((contact: Contact) => {
+            .subscribe((contact: NewItem) => {
 
                 // Update the selected contact
-                this.selectedContact = contact;
+                this.selectedNew = contact;
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -95,7 +93,7 @@ export class RssFeedListComponent implements OnInit, OnDestroy
                 switchMap(query =>
 
                     // Search
-                    this._rssFeedService.searchContacts(query)
+                    this._rssFeedService.searchNews(query)
                 )
             )
             .subscribe();
@@ -105,7 +103,7 @@ export class RssFeedListComponent implements OnInit, OnDestroy
             if ( !opened )
             {
                 // Remove the selected contact when drawer closed
-                this.selectedContact = null;
+                this.selectedNew = null;
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
@@ -129,19 +127,6 @@ export class RssFeedListComponent implements OnInit, OnDestroy
 
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
-            });
-
-        // Listen for shortcuts
-        fromEvent(this._document, 'keydown')
-            .pipe(
-                takeUntil(this._unsubscribeAll),
-                filter<KeyboardEvent>(event =>
-                    (event.ctrlKey === true || event.metaKey) // Ctrl or Cmd
-                    && (event.key === '/') // '/'
-                )
-            )
-            .subscribe(() => {
-                this.createContact();
             });
     }
 
@@ -171,21 +156,6 @@ export class RssFeedListComponent implements OnInit, OnDestroy
         this._changeDetectorRef.markForCheck();
     }
 
-    /**
-     * Create contact
-     */
-    createContact(): void
-    {
-        // Create the contact
-        this._rssFeedService.createContact().subscribe((newContact) => {
-
-            // Go to the new contact
-            this._router.navigate(['./', newContact.id], {relativeTo: this._activatedRoute});
-
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
 
     /**
      * Track by function for ngFor loops
